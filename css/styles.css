@@ -5,11 +5,6 @@
     padding: 0;
 }
 
-.lista-principal-conexao {
-    list-style-type: none;
-    margin: 10px;
-}
-
 
 .card-content-container{
     background-color: rgba(63, 81, 181, 0.55);
@@ -18,6 +13,12 @@
     right: 0;
     bottom: 0;
     left: 0;
+}
+
+
+.lista-principal-conexao {
+    list-style-type: none;
+    margin: 10px;
 }
 
 .lista-principal-conexao .mdl-card{
@@ -34,7 +35,6 @@
     max-width: 195px;
 }
 
-
 .lista-principal-conexao .mdl-card__title{
     margin-bottom: 0;
 }
@@ -50,6 +50,58 @@
 
 
 
+
+.lista-principal-pesquisa {
+    list-style-type: none;
+    margin: 10px;
+}
+
+.lista-principal-pesquisa .mdl-card{
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 145px;
+    position: relative;
+}
+
+.lista-principal-pesquisa .mdl-card__title-text{
+    font-size: 18px;
+    font-weight: bold;
+    max-width: 195px;
+}
+
+.lista-principal-pesquisa .mdl-card__title{
+    margin-bottom: 0;
+}
+
+.lista-principal-pesquisa .mdl-card__title, .lista-principal-pesquisa .mdl-card__supporting-text{
+    color: white;
+    word-wrap: break-word;
+}
+
+.lista-principal-pesquisa .mdl-card__menu{
+    color: white;
+}
+
+
+
+
+
+
+
 #about-dialog{
+    background-color: rgba(63, 81, 181, 0.55);
+    color: white;
     text-align: center;
+}
+
+#about-dialog .autor{
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+}
+
+#about-dialog .email{
+    vertical-align: bottom;
+    color: black;
 }
