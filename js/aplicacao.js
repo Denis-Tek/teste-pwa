@@ -1,7 +1,10 @@
 // Mapeamento DOM
 let listaPrincipal        = document.querySelector('.lista-principal');
+let botaoAdd              = document.querySelector('.botao-add');
 let modalAbout            = document.querySelector('#about-dialog');
 let modalAbout_Botaoclose = modalAbout.querySelector('.close');
+
+botaoAdd.style.display = 'none';
 
 let Conexoes = [
     {'id': 1,
@@ -32,6 +35,11 @@ let Pesquisas = [
         'conexao': 2,
         'apelido': 'Listar Bancos',
         'comando': 'select CODIGO_BANCO, DESCRICAO_BANCO from BANCO'},
+    {'id': 5,
+        'conexao': 2,
+        'apelido': 'Listar Qtde Duplicatas',
+        'comando': 'select count(*) from DUPLICATA'},
+
 ];
 
 modalAbout_Botaoclose.addEventListener('click', (event) =>  {
@@ -97,6 +105,7 @@ function ListarConexoes () {
     })
 
     listaPrincipal.innerHTML = htmlConexoes;
+    botaoAdd.style.display = 'inherit';
 };
 
 function ListarPesquisas () {
@@ -130,4 +139,5 @@ function ListarPesquisas () {
     })
 
     listaPrincipal.innerHTML = htmlPesquisas;
+    botaoAdd.style.display = 'inherit';
 }
