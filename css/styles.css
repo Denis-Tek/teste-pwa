@@ -5,6 +5,14 @@
     padding: 0;
 }
 
+.botao-add {
+    margin: 16px;
+    bottom: 16px;
+    position: sticky;
+    z-index: 1;
+    float: right;
+}
+
 
 .card-content-container{
     background-color: rgba(63, 81, 181, 0.55);
@@ -90,7 +98,7 @@
 
 
 #about-dialog{
-    background-color: rgba(63, 81, 181, 0.55);
+    background-color: rgb(63, 81, 181);
     color: white;
     text-align: center;
 }
