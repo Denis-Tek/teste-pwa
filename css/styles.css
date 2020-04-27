@@ -97,19 +97,38 @@
 
 
 
-#about-dialog{
+#dialogo-sobre{
     background-color: rgb(63, 81, 181);
     color: white;
     text-align: center;
 }
 
-#about-dialog .autor{
+#dialogo-sobre .autor{
     font-size: 14px;
     font-weight: bold;
     color: white;
 }
 
-#about-dialog .email{
+#dialogo-sobre .email{
     vertical-align: bottom;
     color: black;
+}
+
+
+
+
+#dialogo-confirmar-exclusao{
+    background-color: rgb(231, 75, 75);
+    color: white;
+    text-align: center;
+}
+
+#dialogo-confirmar-exclusao .titulo{
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+}
+
+#dialogo-confirmar-exclusao .texto{
+    color: white;
 }

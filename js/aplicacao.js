@@ -1,12 +1,16 @@
 // Mapeamento DOM
-let listaPrincipal        = document.querySelector('.lista-principal');
-let botaoAdd              = document.querySelector('.botao-add');
-let modalAbout            = document.querySelector('#about-dialog');
-let modalAbout_Botaoclose = modalAbout.querySelector('.close');
+let listaPrincipal         = document.querySelector('.lista-principal');
+let botaoAdd               = document.querySelector('.botao-add');
+let modalAbout             = document.querySelector('#dialogo-sobre');
+let modalConfirmarExclusao = document.querySelector('#dialogo-confirmar-exclusao');
+
+let modalAbout_Botaoclose                 = modalAbout.querySelector('.close');
+let modalConfirmarExclusao_BotaoClose     = modalConfirmarExclusao.querySelector('.close');
+let modalConfirmarExclusao_BotaoConfirmar = modalConfirmarExclusao.querySelector('.done');
 
 botaoAdd.style.display = 'none';
 
-let Conexoes = [
+let Conexoes = {"Dados" :[
     {'id': 1,
         'apelido': 'ERP 4g',
         'caminho': '192.168.254.212/3050:d:\\tek-system\\dados\\dadosmc_fb305.fdb'},
@@ -16,9 +20,9 @@ let Conexoes = [
     {'id': 3,
         'apelido': 'Cliente 1045',
         'caminho': '192.168.254.176/3053:/home/denis/dadosmc-1045.fdb'}
-];
+]};
 
-let Pesquisas = [
+let Pesquisas = {"Dados": [
     {'id': 1,
         'conexao': 1,
         'apelido': 'Listar Pessoas',
@@ -40,16 +44,32 @@ let Pesquisas = [
         'apelido': 'Listar Qtde Duplicatas',
         'comando': 'select count(*) from DUPLICATA'},
 
-];
+]};
 
 modalAbout_Botaoclose.addEventListener('click', (event) =>  {
     modalAbout.close();
     FecharMenu();
 });
 
-// Tratamento de clicks no menu principal
+modalConfirmarExclusao_BotaoClose.addEventListener('click', (event) =>  {
+    modalConfirmarExclusao.close();
+});
+
+modalConfirmarExclusao_BotaoConfirmar.addEventListener('click', (event) =>  {
+    modalConfirmarExclusao.Lista.Dados = modalConfirmarExclusao.Lista.Dados.filter(Item => Item.id != modalConfirmarExclusao.IdExcluir);
+    modalConfirmarExclusao.Funcao();
+    modalConfirmarExclusao.close();
+});
+
+
+function FecharMenu() {
+    document.querySelector('.mdl-layout__obfuscator').click();
+}
+
+
 document.addEventListener('click', (event) => {
 
+    // Tratamento de clicks no menu principal
     if (event.target.classList.contains('mdl-navigation__link')) {
 
         var MenuItemClicado = event.target;
@@ -63,20 +83,38 @@ document.addEventListener('click', (event) => {
                 ListarPesquisas();
                 FecharMenu();
                 break;
-            case 'VerInformacoes': modalAbout.showModal(); break;
+            case 'VerInformacoes':
+                modalAbout.showModal();
+                break;
         }
     }
+
+    else if (event.target.classList.contains('material-icons')) {
+
+        var button = event.target.parentElement;
+
+        switch (button.dataset['action']) {
+            case 'excluirConexao':
+                modalConfirmarExclusao.Lista     = Conexoes;
+                modalConfirmarExclusao.IdExcluir = button.dataset['item'];
+                modalConfirmarExclusao.Funcao    = ListarConexoes;
+                modalConfirmarExclusao.showModal();
+                break;
+            case 'excluirPesquisa':
+                modalConfirmarExclusao.Lista     = Pesquisas;
+                modalConfirmarExclusao.IdExcluir = button.dataset['item'];
+                modalConfirmarExclusao.Funcao    = ListarPesquisas;
+                modalConfirmarExclusao.showModal();
+                break;
+        }
+    }
+
 });
-
-
-function FecharMenu() {
-    document.querySelector('.mdl-layout__obfuscator').click();
-}
 
 
 function ListarConexoes () {
     var htmlConexoes = '';
-    Conexoes.forEach(Conexao => {
+    Conexoes.Dados.forEach(Conexao => {
         htmlConexoes +=
             `<li class="lista-principal-conexao">
                 <div class="demo-card-wide mdl-card mdl-shadow--2dp">
@@ -108,9 +146,10 @@ function ListarConexoes () {
     botaoAdd.style.display = 'inherit';
 };
 
+
 function ListarPesquisas () {
     var htmlPesquisas = '';
-    Pesquisas.forEach(Pesquisa => {
+    Pesquisas.Dados.forEach(Pesquisa => {
         htmlPesquisas +=
             `<li class="lista-principal-pesquisa">
                 <div class="demo-card-wide mdl-card mdl-shadow--2dp">
