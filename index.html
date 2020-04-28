@@ -9,105 +9,107 @@
         <link rel="stylesheet" type="text/css" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
         <link rel="stylesheet" type="text/css" href="./css/styles.css">
     </head>
-<body>
+    <body>
 
-
-<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-    <header class="mdl-layout__header">
-        <div class="mdl-layout__header-row">
-            <span class="mdl-layout-title">DPR Firebird Query</span>
-        </div>
-    </header>
-    <div class="mdl-layout__drawer">
-        <span class="mdl-layout-title">Menu</span>
-        <nav class="mdl-navigation">
-            <a class="mdl-navigation__link" data-action="ListarConexoes">Conexões</a>
-            <a class="mdl-navigation__link" data-action="ListarPesquisas">Pesquisas (Query)</a>
-            <a class="mdl-navigation__link" data-action="VerInformacoes">Informações</a>
-        </nav>
-    </div>
-    <main class="mdl-layout__content">
-        <div class="page-content">
-            <ul class="lista-principal"></ul>
-            <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored botao-add">
-                <i class="material-icons">add</i>
-            </button>
-        </div>
-    </main>
-</div>
-
-
-<dialog class="mdl-dialog" id="dialogo-sobre">
-    <div class="mdl-dialog__content">
-        <p class="autor">Autor: Denis Pereira Raymundo</p>
-        <a href="mailto:denisuba@gmail.com"><span class="material-icons email">email</span></a>
-        <a href="https://www.linkedin.com/in/denis-pereira-raymundo" target="_blank"><img src="https://img.icons8.com/material-outlined/24/000000/linkedin.png"/></a>
-    </div>
-    <div class="mdl-dialog__actions">
-        <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect close">
-            <i class="material-icons">close</i>
-        </button>
-    </div>
-</dialog>
-
-
-<dialog class="mdl-dialog" id="dialogo-confirmar-exclusao">
-    <div class="mdl-dialog__content">
-        <p class="titulo">Confirmação de Exclusão</p>
-        <div class="texto">Tem certeza que deseja excluir?</div>
-    </div>
-    <div class="mdl-dialog__actions">
-        <button class="mdl-button mdl-js-button done"> Sim </button>
-        <button class="mdl-button mdl-js-button close"> Não </button>
-    </div>
-</dialog>
-
-
-<dialog class="mdl-dialog" id="item-dialog">
-    <div class="mdl-dialog__content">
-        <img src="" id="item-dialog-picture" width="230" height="200"/>
-        <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect open-camera" data-action="startCamera">
-            <i class="material-icons">camera_alt</i>
-        </button>
-        <form action="#">
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" type="text" id="title" maxlength="30" placeholder="Title">
+        <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+            <header class="mdl-layout__header">
+                <div class="mdl-layout__header-row">
+                    <span class="mdl-layout-title">DPR Firebird Query</span>
+                </div>
+            </header>
+            <div class="mdl-layout__drawer">
+                <span class="mdl-layout-title">Menu</span>
+                <nav class="mdl-navigation">
+                    <a class="mdl-navigation__link" data-action="ListarConexoes">Conexões</a>
+                    <a class="mdl-navigation__link" data-action="ListarPesquisas">Pesquisas (Query)</a>
+                    <a class="mdl-navigation__link" data-action="VerInformacoes">Informações</a>
+                </nav>
             </div>
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <textarea class="mdl-textfield__input" id="description" maxlength="100" rows="4" placeholder="Description"></textarea>
+            <main class="mdl-layout__content">
+                <div class="page-content">
+                    <ul class="lista-principal"></ul>
+                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored botao-add" data-action="adicionar">
+                        <i class="material-icons">add</i>
+                    </button>
+                </div>
+            </main>
+        </div>
+
+
+        <dialog class="mdl-dialog" id="dialogo-sobre">
+            <div class="mdl-dialog__content">
+                <p class="autor">Autor: Denis Pereira Raymundo</p>
+                <a href="mailto:denisuba@gmail.com"><span class="material-icons email">email</span></a>
+                <a href="https://www.linkedin.com/in/denis-pereira-raymundo" target="_blank"><img src="https://img.icons8.com/material-outlined/24/000000/linkedin.png"/></a>
             </div>
-        </form>
-    </div>
-    <div class="mdl-dialog__actions">
-        <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect close">
-            <i class="material-icons">close</i>
-        </button>
-        <button class="mdl-button mdl-js-button mdl-js-ripple-effect add" data-action="save">
-            Salvar
-        </button>
-    </div>
-</dialog>
+            <div class="mdl-dialog__actions">
+                <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect close">
+                    <i class="material-icons">close</i>
+                </button>
+            </div>
+        </dialog>
 
 
-<dialog class="mdl-dialog" id="camera-dialog">
-    <div class="mdl-dialog__content">
-        <video id="camera-tag" width="230" height="200" autoplay ></video>
-        <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect shoot" data-action="shoot">
-            <i class="material-icons">camera_alt</i>
-        </button>
-    </div>
-    <div class="mdl-dialog__actions">
-        <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect close">
-            <i class="material-icons">close</i>
-        </button>
-        <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect shoot" data-action="changeSource">
-            <i class="material-icons">switch_camera</i>
-        </button>
-    </div>
-</dialog>
+        <dialog class="mdl-dialog" id="dialogo-confirmar-exclusao">
+            <div class="mdl-dialog__content">
+                <p class="titulo">Confirmação de Exclusão</p>
+                <div class="texto">Tem certeza que deseja excluir?</div>
+            </div>
+            <div class="mdl-dialog__actions">
+                <button class="mdl-button mdl-js-button done"> Sim </button>
+                <button class="mdl-button mdl-js-button close"> Não </button>
+            </div>
+        </dialog>
 
-<script async src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-<script async src="./js/aplicacao.js"  ></script>
 
-</body>
+        <dialog class="mdl-dialog" id="dialogo-editar-conexao">
+            <div class="mdl-dialog__content">
+                <form action="#">
+                    <input type="hidden" id="idConexao">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="text" id="apelidoConexao" maxlength="30" placeholder="Apelido da Conexão" required>
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <textarea class="mdl-textfield__input" id="caminhoConexao" rows="4" placeholder="String de conexão" required></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="mdl-dialog__actions">
+                <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect close">
+                    <i class="material-icons">close</i>
+                </button>
+                <button class="mdl-button mdl-js-button mdl-js-ripple-effect done" data-action="save">
+                    Salvar
+                </button>
+            </div>
+        </dialog>
+
+
+        <dialog class="mdl-dialog" id="dialogo-editar-pesquisa">
+            <div class="mdl-dialog__content">
+                <form action="#">
+                    <input type="hidden" id="idPesquisa">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="text" id="apelidoPesquisa" maxlength="30" placeholder="Descrição da SQL" required>
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <textarea class="mdl-textfield__input" id="comandoPesquisa" rows="10" placeholder="Comando SQL" required></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="mdl-dialog__actions">
+                <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect close">
+                    <i class="material-icons">close</i>
+                </button>
+                <button class="mdl-button mdl-js-button mdl-js-ripple-effect done" data-action="save">
+                    Salvar
+                </button>
+            </div>
+        </dialog>
+
+
+        <script async src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+        <script async src="./js/aplicacao.js"  ></script>
+
+    </body>
 </html>
