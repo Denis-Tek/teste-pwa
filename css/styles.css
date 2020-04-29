@@ -11,6 +11,7 @@
     position: sticky;
     z-index: 1;
     float: right;
+    background-color: rgb(26,35,126) !important;
 }
 
 
@@ -68,7 +69,7 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    min-height: 145px;
+    min-height: 200px;
     position: relative;
 }
 
@@ -93,12 +94,16 @@
 
 
 
-
+#filtro {
+    background-color: rgb(197,202,233);
+    text-align: center;
+    font-size: 15px;
+}
 
 
 
 #dialogo-sobre{
-    background-color: rgb(63, 81, 181);
+    background-color: rgb(92,107,192);
     color: white;
     text-align: center;
 }

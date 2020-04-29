@@ -3,6 +3,7 @@ let botaoAdd               = document.querySelector('.botao-add');
 botaoAdd.style.display = 'none';
 
 let listaPrincipal         = document.querySelector('.lista-principal');
+let FiltroPrincipal        = document.querySelector('#filtro');
 
 let modalAbout             = document.querySelector('#dialogo-sobre');
 let modalConfirmarExclusao = document.querySelector('#dialogo-confirmar-exclusao');
@@ -104,10 +105,12 @@ document.addEventListener('click', (event) => {
 
         switch (MenuItemClicado.dataset['action']) {
             case 'ListarConexoes':
+                LimparFiltro();
                 ListarConexoes();
                 FecharMenu();
                 break;
             case 'ListarPesquisas':
+                LimparFiltro();
                 ListarPesquisas();
                 FecharMenu();
                 break;
@@ -151,11 +154,25 @@ document.addEventListener('click', (event) => {
                 modalConfirmarExclusao.Funcao    = ListarPesquisas;
                 modalConfirmarExclusao.showModal();
                 break;
+            case 'abrirConexao':
+                Filtrar(button.dataset['item']);
+                ListarPesquisas();
+                break;
+
         }
     }
 
 });
 
+function LimparFiltro() {
+    FiltroPrincipal.dataset['filtro'] = '';
+    FiltroPrincipal.innerText = '';
+}
+
+function Filtrar(idConexao){
+    FiltroPrincipal.dataset['filtro'] = idConexao;
+    FiltroPrincipal.innerText = 'Exibindo apenas pesquisas da conexão: ' + Conexoes.Dados.find((conexao) => conexao.id == idConexao).apelido;
+}
 
 function ListarConexoes () {
     var htmlConexoes = '';
@@ -196,8 +213,9 @@ function ListarConexoes () {
 
 function ListarPesquisas () {
     var htmlPesquisas = '';
+    let conexaoFiltrada = FiltroPrincipal.dataset['filtro'];
     Pesquisas.Dados.sort((a, b) => a.apelido.toUpperCase() > b.apelido.toUpperCase() ? 1 : -1);
-    Pesquisas.Dados.forEach(Pesquisa => {
+    Pesquisas.Dados.filter((elemento) => elemento.conexao == conexaoFiltrada || ! conexaoFiltrada).forEach(Pesquisa => {
         htmlPesquisas +=
             `<li class="lista-principal-pesquisa">
                 <div class="demo-card-wide mdl-card mdl-shadow--2dp">
