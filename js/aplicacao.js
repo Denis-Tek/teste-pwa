@@ -14,9 +14,11 @@ let editIdConexao          = modalEditarConexao.querySelector('#idConexao');
 let editApelidoConexao     = modalEditarConexao.querySelector('#apelidoConexao');
 let editCaminhoConexao     = modalEditarConexao.querySelector('#caminhoConexao');
 
-let editIdPesquisa          = modalEditarPesquisa.querySelector('#idPesquisa');
-let editApelidoPesquisa     = modalEditarPesquisa.querySelector('#apelidoPesquisa');
-let editComandoPesquisa     = modalEditarPesquisa.querySelector('#comandoPesquisa');
+let editIdPesquisa           = modalEditarPesquisa.querySelector('#idPesquisa');
+let listaConexoesDisponiveis = modalEditarPesquisa.querySelector('#listaConexoesDisponiveis');
+let editConexaoSelecionada   = document.getElementsByName('conexaoPesquisa')[0];
+let editApelidoPesquisa      = modalEditarPesquisa.querySelector('#apelidoPesquisa');
+let editComandoPesquisa      = modalEditarPesquisa.querySelector('#comandoPesquisa');
 
 let modalEditarConexao_BotaoSalvar        = modalEditarConexao.querySelector('.done');
 let modalEditarConexao_BotaoClose         = modalEditarConexao.querySelector('.close');
@@ -171,7 +173,7 @@ function LimparFiltro() {
 
 function Filtrar(idConexao){
     FiltroPrincipal.dataset['filtro'] = idConexao;
-    FiltroPrincipal.innerText = 'Exibindo apenas pesquisas da conexão: ' + Conexoes.Dados.find((conexao) => conexao.id == idConexao).apelido;
+    FiltroPrincipal.innerHTML = 'Exibindo apenas pesquisas da conexão: <strong>' + Conexoes.Dados.find((conexao) => conexao.id == idConexao).apelido + '</strong>';
 }
 
 function ListarConexoes () {
@@ -223,6 +225,9 @@ function ListarPesquisas () {
                       <div class="mdl-card__title">
                         <h2 class="mdl-card__title-text">${Pesquisa.apelido}</h2>
                       </div>
+                      
+                      <div class="mdl-card__supporting-text"><strong>Conexão: ${Conexoes.Dados.find((conexao) => conexao.id == Pesquisa.conexao).apelido}</strong></div>
+                      
                       <div class="mdl-card__supporting-text">
                         ${Pesquisa.comando}
                       </div>
@@ -263,14 +268,31 @@ function PreencherFormEdicaoConexao(id) {
 
 function PreencherFormEdicaoPesquisa(id) {
     editIdPesquisa.value = id;
+
     if (id < 0) {
-        editApelidoPesquisa.value = '';
-        editComandoPesquisa.value = '';
+        CarregarListaConexoes(FiltroPrincipal.dataset['filtro']);
+        editApelidoPesquisa.value    = '';
+        editComandoPesquisa.value    = '';
     } else {
         let index = Pesquisas.Dados.findIndex(pesquisa => pesquisa.id == id);
+
+        CarregarListaConexoes(Pesquisas.Dados[index].conexao);
+
         editApelidoPesquisa.value = Pesquisas.Dados[index].apelido;
         editComandoPesquisa.value = Pesquisas.Dados[index].comando;
     }
+}
+
+function CarregarListaConexoes(idConexaoAtual) {
+    let lista = '';
+    Conexoes.Dados.forEach((conexao) => {
+        lista += `<li class="mdl-menu__item" data-val=${conexao.id} ${conexao.id == idConexaoAtual ? 'data-selected="true"' : ''}> ${conexao.apelido} </li>`
+    });
+    listaConexoesDisponiveis.innerHTML = lista;
+    if (idConexaoAtual == '') {
+        modalEditarPesquisa.querySelector('#conexaoPesquisa').value = '';
+    }
+    getmdlSelect.init('#selectConexaoPesquisa');
 }
 
 modalEditarConexao_BotaoSalvar.addEventListener('click', (event) =>  {
@@ -297,7 +319,9 @@ modalEditarConexao_BotaoSalvar.addEventListener('click', (event) =>  {
 
 
 modalEditarPesquisa_BotaoSalvar.addEventListener('click', (event) =>  {
-    if (editApelidoPesquisa.value.trim() == '' || editComandoPesquisa.value.trim() == '') return;
+    if (editConexaoSelecionada.value.trim() == '' ||
+        editApelidoPesquisa.value.trim() == '' ||
+        editComandoPesquisa.value.trim() == '') return;
 
     id = editIdPesquisa.value;
 
@@ -310,7 +334,7 @@ modalEditarPesquisa_BotaoSalvar.addEventListener('click', (event) =>  {
     } else {
         index = Pesquisas.Dados.findIndex(pesquisa => pesquisa.id == id);
     }
-
+    Pesquisas.Dados[index].conexao = editConexaoSelecionada.value.trim();
     Pesquisas.Dados[index].apelido = editApelidoPesquisa.value.trim();
     Pesquisas.Dados[index].comando = editComandoPesquisa.value.trim();
 
