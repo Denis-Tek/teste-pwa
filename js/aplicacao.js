@@ -1,37 +1,35 @@
 // Mapeamento DOM
-let botaoAdd               = document.querySelector('.botao-add');
-botaoAdd.style.display = 'none';
+let $ = document.querySelector.bind(document);
+let botaoAdd                 = $('.botao-add');        botaoAdd.style.display = 'none';
+let listaPrincipal           = $('.lista-principal');
+let filtroPrincipal          = $('#filtro');
+let filtroPrincipal_Mensagem = $('#mensagemFiltro');
+let filtroPrincipal_Cancelar = $('.limpar_filtro');
+let modalAbout               = $('#dialogo-sobre');
+let modalConfirmarExclusao   = $('#dialogo-confirmar-exclusao');
+let modalEditarConexao       = $('#dialogo-editar-conexao');
+let modalEditarPesquisa      = $('#dialogo-editar-pesquisa');
 
-let listaPrincipal         = document.querySelector('.lista-principal');
-let FiltroPrincipal        = document.querySelector('#filtro');
+let editIdConexao                   = modalEditarConexao.querySelector('#idConexao');
+let editApelidoConexao              = modalEditarConexao.querySelector('#apelidoConexao');
+let editCaminhoConexao              = modalEditarConexao.querySelector('#caminhoConexao');
+let modalEditarConexao_BotaoSalvar  = modalEditarConexao.querySelector('.done');
+let modalEditarConexao_BotaoClose   = modalEditarConexao.querySelector('.close');
 
-let modalAbout             = document.querySelector('#dialogo-sobre');
-let modalConfirmarExclusao = document.querySelector('#dialogo-confirmar-exclusao');
-let modalEditarConexao     = document.querySelector('#dialogo-editar-conexao');
-let modalEditarPesquisa    = document.querySelector('#dialogo-editar-pesquisa');
-
-let editIdConexao          = modalEditarConexao.querySelector('#idConexao');
-let editApelidoConexao     = modalEditarConexao.querySelector('#apelidoConexao');
-let editCaminhoConexao     = modalEditarConexao.querySelector('#caminhoConexao');
-
-let editIdPesquisa           = modalEditarPesquisa.querySelector('#idPesquisa');
-let listaConexoesDisponiveis = modalEditarPesquisa.querySelector('#listaConexoesDisponiveis');
-let editConexaoSelecionada   = document.getElementsByName('conexaoPesquisa')[0];
-let editApelidoPesquisa      = modalEditarPesquisa.querySelector('#apelidoPesquisa');
-let editComandoPesquisa      = modalEditarPesquisa.querySelector('#comandoPesquisa');
-
-let modalEditarConexao_BotaoSalvar        = modalEditarConexao.querySelector('.done');
-let modalEditarConexao_BotaoClose         = modalEditarConexao.querySelector('.close');
-
-let modalEditarPesquisa_BotaoSalvar       = modalEditarPesquisa.querySelector('.done');
-let modalEditarPesquisa_BotaoClose        = modalEditarPesquisa.querySelector('.close');
+let editIdPesquisa                  = modalEditarPesquisa.querySelector('#idPesquisa');
+let listaConexoesDisponiveis        = modalEditarPesquisa.querySelector('#listaConexoesDisponiveis');
+let editConexaoSelecionada          = document.getElementsByName('conexaoPesquisa')[0];
+let editApelidoPesquisa             = modalEditarPesquisa.querySelector('#apelidoPesquisa');
+let editComandoPesquisa             = modalEditarPesquisa.querySelector('#comandoPesquisa');
+let modalEditarPesquisa_BotaoSalvar = modalEditarPesquisa.querySelector('.done');
+let modalEditarPesquisa_BotaoClose  = modalEditarPesquisa.querySelector('.close');
 
 let modalConfirmarExclusao_BotaoConfirmar = modalConfirmarExclusao.querySelector('.done');
 let modalConfirmarExclusao_BotaoClose     = modalConfirmarExclusao.querySelector('.close');
 
 let modalAbout_Botaoclose                 = modalAbout.querySelector('.close');
 
-
+// Mock inicial dos dados para testes
 let Conexoes = {"Dados" :[
     {'id': 1,
         'apelido': 'ERP 4g',
@@ -84,6 +82,11 @@ modalEditarPesquisa_BotaoClose.addEventListener('click', (event) =>  {
 
 modalConfirmarExclusao_BotaoClose.addEventListener('click', (event) =>  {
     modalConfirmarExclusao.close();
+});
+
+filtroPrincipal_Cancelar.addEventListener('click', (event) =>  {
+    LimparFiltro();
+    ListarPesquisas();
 });
 
 modalConfirmarExclusao_BotaoConfirmar.addEventListener('click', (event) =>  {
@@ -167,13 +170,15 @@ document.addEventListener('click', (event) => {
 });
 
 function LimparFiltro() {
-    FiltroPrincipal.dataset['filtro'] = '';
-    FiltroPrincipal.innerText = '';
+    filtroPrincipal.style.display = 'none';
+    filtroPrincipal.dataset['filtro'] = '';
+    filtroPrincipal_Mensagem.innerText = '';
 }
 
 function Filtrar(idConexao){
-    FiltroPrincipal.dataset['filtro'] = idConexao;
-    FiltroPrincipal.innerHTML = 'Exibindo apenas pesquisas da conexão: <strong>' + Conexoes.Dados.find((conexao) => conexao.id == idConexao).apelido + '</strong>';
+    filtroPrincipal.style.display = 'inherit';
+    filtroPrincipal.dataset['filtro'] = idConexao;
+    filtroPrincipal_Mensagem.innerHTML = 'Exibindo apenas pesquisas da conexão: <strong>' + Conexoes.Dados.find((conexao) => conexao.id == idConexao).apelido + '</strong>';
 }
 
 function ListarConexoes () {
@@ -215,7 +220,7 @@ function ListarConexoes () {
 
 function ListarPesquisas () {
     var htmlPesquisas = '';
-    let conexaoFiltrada = FiltroPrincipal.dataset['filtro'];
+    let conexaoFiltrada = filtroPrincipal.dataset['filtro'];
     Pesquisas.Dados.sort((a, b) => a.apelido.toUpperCase() > b.apelido.toUpperCase() ? 1 : -1);
     Pesquisas.Dados.filter((elemento) => elemento.conexao == conexaoFiltrada || ! conexaoFiltrada).forEach(Pesquisa => {
         htmlPesquisas +=
@@ -240,7 +245,7 @@ function ListarPesquisas () {
                           <i class="material-icons">delete</i>
                         </button>
                         <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" data-item="${Pesquisa.id}" data-action="abrirPesquisa">
-                          <i class="material-icons">open_in_new</i>
+                          <i class="material-icons">play_arrow</i>
                         </button>
                       </div>
                     </div>
@@ -270,7 +275,7 @@ function PreencherFormEdicaoPesquisa(id) {
     editIdPesquisa.value = id;
 
     if (id < 0) {
-        CarregarListaConexoes(FiltroPrincipal.dataset['filtro']);
+        CarregarListaConexoes(filtroPrincipal.dataset['filtro']);
         editApelidoPesquisa.value    = '';
         editComandoPesquisa.value    = '';
     } else {
@@ -296,7 +301,8 @@ function CarregarListaConexoes(idConexaoAtual) {
 }
 
 modalEditarConexao_BotaoSalvar.addEventListener('click', (event) =>  {
-    if (editApelidoConexao.value.trim() == '' || editCaminhoConexao.value.trim() == '') return;
+    if (editApelidoConexao.value.trim() == '' ||
+        editCaminhoConexao.value.trim() == '') return;
 
     id = editIdConexao.value;
 

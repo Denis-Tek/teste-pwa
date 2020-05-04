@@ -29,7 +29,10 @@
             <main class="mdl-layout__content">
                 <div class="page-content">
 
-                    <div id="filtro"></div>
+                    <div id="filtro">
+                        <div id="mensagemFiltro"></div>
+                        <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect limpar_filtro"><i class="material-icons">close</i></button>
+                    </div>
 
                     <ul class="lista-principal"></ul>
 
@@ -39,32 +42,6 @@
                 </div>
             </main>
         </div>
-
-
-        <dialog class="mdl-dialog" id="dialogo-sobre">
-            <div class="mdl-dialog__content">
-                <p class="autor">Autor: Denis Pereira Raymundo</p>
-                <a href="mailto:denisuba@gmail.com"><span class="material-icons email">email</span></a>
-                <a href="https://www.linkedin.com/in/denis-pereira-raymundo" target="_blank"><img src="https://img.icons8.com/material-outlined/24/000000/linkedin.png"/></a>
-            </div>
-            <div class="mdl-dialog__actions">
-                <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect close">
-                    <i class="material-icons">close</i>
-                </button>
-            </div>
-        </dialog>
-
-
-        <dialog class="mdl-dialog" id="dialogo-confirmar-exclusao">
-            <div class="mdl-dialog__content">
-                <p class="titulo">Confirmação de Exclusão</p>
-                <div class="texto">Tem certeza que deseja excluir?</div>
-            </div>
-            <div class="mdl-dialog__actions">
-                <button class="mdl-button mdl-js-button done"> Sim </button>
-                <button class="mdl-button mdl-js-button close"> Não </button>
-            </div>
-        </dialog>
 
 
         <dialog class="mdl-dialog" id="dialogo-editar-conexao">
@@ -114,9 +91,35 @@
         </dialog>
 
 
+        <dialog class="mdl-dialog" id="dialogo-confirmar-exclusao">
+            <div class="mdl-dialog__content">
+                <p class="titulo">Confirmação de Exclusão</p>
+                <div class="texto">Tem certeza que deseja excluir?</div>
+            </div>
+            <div class="mdl-dialog__actions">
+                <button class="mdl-button mdl-js-button done"> Sim </button>
+                <button class="mdl-button mdl-js-button close"> Não </button>
+            </div>
+        </dialog>
+
+
+        <dialog class="mdl-dialog" id="dialogo-sobre">
+            <div class="mdl-dialog__content">
+                <p class="autor">Autor: Denis Pereira Raymundo</p>
+                <a href="mailto:denisuba@gmail.com"><span class="material-icons email">email</span></a>
+                <a href="https://www.linkedin.com/in/denis-pereira-raymundo" target="_blank"><img src="https://img.icons8.com/material-outlined/24/000000/linkedin.png"/></a>
+            </div>
+            <div class="mdl-dialog__actions">
+                <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect close">
+                    <i class="material-icons">close</i>
+                </button>
+            </div>
+        </dialog>
+
+
         <script async src="https://code.getmdl.io/1.3.0/material.min.js"></script>
         <script defer src="./js/getmdl-select-master/getmdl-select.min.js"></script>
-        <script async src="./js/aplicacao.js"  ></script>
+        <script defer src="./js/aplicacao.js"></script>
 
     </body>
 </html>
