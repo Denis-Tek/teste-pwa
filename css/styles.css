@@ -136,6 +136,6 @@
     color: white;
 }
 
-#dialogo-confirmar-exclusao .texto{
+#dialogo-confirmar-exclusao .texto, .texto_extra_exclusao{
     color: white;
 }

@@ -24,6 +24,7 @@ let editComandoPesquisa             = modalEditarPesquisa.querySelector('#comand
 let modalEditarPesquisa_BotaoSalvar = modalEditarPesquisa.querySelector('.done');
 let modalEditarPesquisa_BotaoClose  = modalEditarPesquisa.querySelector('.close');
 
+let modalConfirmarExclusao_texto_extra    = modalConfirmarExclusao.querySelector('.texto_extra_exclusao');
 let modalConfirmarExclusao_BotaoConfirmar = modalConfirmarExclusao.querySelector('.done');
 let modalConfirmarExclusao_BotaoClose     = modalConfirmarExclusao.querySelector('.close');
 
@@ -67,35 +68,6 @@ let Pesquisas = {"Dados": [
 ]};
 
 
-modalAbout_Botaoclose.addEventListener('click', (event) =>  {
-    modalAbout.close();
-    FecharMenu();
-});
-
-modalEditarConexao_BotaoClose.addEventListener('click', (event) =>  {
-    modalEditarConexao.close();
-});
-
-modalEditarPesquisa_BotaoClose.addEventListener('click', (event) =>  {
-    modalEditarPesquisa.close();
-});
-
-modalConfirmarExclusao_BotaoClose.addEventListener('click', (event) =>  {
-    modalConfirmarExclusao.close();
-});
-
-filtroPrincipal_Cancelar.addEventListener('click', (event) =>  {
-    LimparFiltro();
-    ListarPesquisas();
-});
-
-modalConfirmarExclusao_BotaoConfirmar.addEventListener('click', (event) =>  {
-    modalConfirmarExclusao.Lista.Dados = modalConfirmarExclusao.Lista.Dados.filter(Item => Item.id != modalConfirmarExclusao.IdExcluir);
-    modalConfirmarExclusao.Funcao();
-    modalConfirmarExclusao.close();
-});
-
-
 function FecharMenu() {
     document.querySelector('.mdl-layout__obfuscator').click();
 }
@@ -123,9 +95,11 @@ document.addEventListener('click', (event) => {
                 modalAbout.showModal();
                 break;
         }
-    }
+        return;
+    };
 
-    else if (event.target.classList.contains('material-icons')) {
+    // Tratamento de clicks em botões de ações
+    if (event.target.classList.contains('material-icons')) {
 
         var button = event.target.parentElement;
 
@@ -148,15 +122,20 @@ document.addEventListener('click', (event) => {
                 modalEditarPesquisa.showModal();
                 break
             case 'excluirConexao':
-                modalConfirmarExclusao.Lista     = Conexoes;
-                modalConfirmarExclusao.IdExcluir = button.dataset['item'];
-                modalConfirmarExclusao.Funcao    = ListarConexoes;
+                modalConfirmarExclusao_texto_extra.innerHTML = `Você está tentando excluir a conexão <strong> ${ApelidoDaConexao(button.dataset['item'])} </strong>.<br>`+
+                                                               'Todas as pesquisas associadas a esta conexão serão também excluídas.';
+                modalConfirmarExclusao.Lista        = Conexoes;
+                modalConfirmarExclusao.IdExcluir    = button.dataset['item'];
+                modalConfirmarExclusao.AntesExcluir = ExcluirPesquisas;
+                modalConfirmarExclusao.AposExcluir  = ListarConexoes;
                 modalConfirmarExclusao.showModal();
                 break;
             case 'excluirPesquisa':
-                modalConfirmarExclusao.Lista     = Pesquisas;
-                modalConfirmarExclusao.IdExcluir = button.dataset['item'];
-                modalConfirmarExclusao.Funcao    = ListarPesquisas;
+                modalConfirmarExclusao_texto_extra.innerHTML = `Você está tentando excluir a pesquisa <strong> ${ApelidoDaPesquisa(button.dataset['item'])} </strong>`;
+                modalConfirmarExclusao.Lista        = Pesquisas;
+                modalConfirmarExclusao.IdExcluir    = button.dataset['item'];
+                modalConfirmarExclusao.AntesExcluir = null;
+                modalConfirmarExclusao.AposExcluir  = ListarPesquisas;
                 modalConfirmarExclusao.showModal();
                 break;
             case 'abrirConexao':
@@ -165,8 +144,15 @@ document.addEventListener('click', (event) => {
                 break;
 
         }
+        return;
     }
 
+});
+
+
+filtroPrincipal_Cancelar.addEventListener('click', (event) =>  {
+    LimparFiltro();
+    ListarPesquisas();
 });
 
 function LimparFiltro() {
@@ -178,8 +164,17 @@ function LimparFiltro() {
 function Filtrar(idConexao){
     filtroPrincipal.style.display = 'inherit';
     filtroPrincipal.dataset['filtro'] = idConexao;
-    filtroPrincipal_Mensagem.innerHTML = 'Exibindo apenas pesquisas da conexão: <strong>' + Conexoes.Dados.find((conexao) => conexao.id == idConexao).apelido + '</strong>';
+    filtroPrincipal_Mensagem.innerHTML = 'Exibindo apenas pesquisas da conexão: <strong>' + ApelidoDaConexao(idConexao) + '</strong>';
 }
+
+function ApelidoDaConexao(idConexao) {
+  return Conexoes.Dados.find((conexao) => conexao.id == idConexao).apelido;
+}
+
+function ApelidoDaPesquisa(idPesquisa) {
+    return Pesquisas.Dados.find((pesquisa) => pesquisa.id == idPesquisa).apelido;
+}
+
 
 function ListarConexoes () {
     var htmlConexoes = '';
@@ -217,7 +212,6 @@ function ListarConexoes () {
     botaoAdd.style.display = 'inherit';
 };
 
-
 function ListarPesquisas () {
     var htmlPesquisas = '';
     let conexaoFiltrada = filtroPrincipal.dataset['filtro'];
@@ -231,7 +225,7 @@ function ListarPesquisas () {
                         <h2 class="mdl-card__title-text">${Pesquisa.apelido}</h2>
                       </div>
                       
-                      <div class="mdl-card__supporting-text"><strong>Conexão: ${Conexoes.Dados.find((conexao) => conexao.id == Pesquisa.conexao).apelido}</strong></div>
+                      <div class="mdl-card__supporting-text"><strong>Conexão: ${ApelidoDaConexao(Pesquisa.conexao)}</strong></div>
                       
                       <div class="mdl-card__supporting-text">
                         ${Pesquisa.comando}
@@ -300,6 +294,11 @@ function CarregarListaConexoes(idConexaoAtual) {
     getmdlSelect.init('#selectConexaoPesquisa');
 }
 
+function ExcluirPesquisas(idConexao){
+    Pesquisas.Dados = Pesquisas.Dados.filter((pesquisa) => pesquisa.conexao != idConexao);
+}
+
+
 modalEditarConexao_BotaoSalvar.addEventListener('click', (event) =>  {
     if (editApelidoConexao.value.trim() == '' ||
         editCaminhoConexao.value.trim() == '') return;
@@ -320,6 +319,10 @@ modalEditarConexao_BotaoSalvar.addEventListener('click', (event) =>  {
     Conexoes.Dados[index].caminho = editCaminhoConexao.value.trim();
 
     ListarConexoes();
+    modalEditarConexao.close();
+});
+
+modalEditarConexao_BotaoClose.addEventListener('click', (event) =>  {
     modalEditarConexao.close();
 });
 
@@ -348,6 +351,34 @@ modalEditarPesquisa_BotaoSalvar.addEventListener('click', (event) =>  {
     modalEditarPesquisa.close();
 });
 
+modalEditarPesquisa_BotaoClose.addEventListener('click', (event) =>  {
+    modalEditarPesquisa.close();
+});
+
+
+modalConfirmarExclusao_BotaoClose.addEventListener('click', (event) =>  {
+    modalConfirmarExclusao.close();
+});
+
+modalConfirmarExclusao_BotaoConfirmar.addEventListener('click', (event) =>  {
+    if (typeof modalConfirmarExclusao.AntesExcluir === 'function') {
+        modalConfirmarExclusao.AntesExcluir(modalConfirmarExclusao.IdExcluir);
+    }
+
+    modalConfirmarExclusao.Lista.Dados = modalConfirmarExclusao.Lista.Dados.filter(Item => Item.id != modalConfirmarExclusao.IdExcluir);
+
+    if (typeof modalConfirmarExclusao.AposExcluir === 'function') {
+        modalConfirmarExclusao.AposExcluir();
+    }
+
+    modalConfirmarExclusao.close();
+});
+
+
+modalAbout_Botaoclose.addEventListener('click', (event) =>  {
+    modalAbout.close();
+    FecharMenu();
+});
 
 
 /**
