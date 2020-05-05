@@ -51,10 +51,12 @@
                 <form action="#">
                     <input type="hidden" id="idConexao">
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" type="text" id="apelidoConexao" maxlength="30" placeholder="Apelido da Conexão" required>
+                        <input class="mdl-textfield__input" type="text" id="apelidoConexao" maxlength="30" required>
+                        <label class="mdl-textfield__label" for="apelidoConexao">Apelido da Conexão</label>
                     </div>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <textarea class="mdl-textfield__input" id="caminhoConexao" rows="4" placeholder="String de conexão" required></textarea>
+                        <textarea class="mdl-textfield__input" id="caminhoConexao" rows="4" placeholder="ex: localhost/3050:c:\dados.fdb" required></textarea>
+                        <label class="mdl-textfield__label" for="caminhoConexao">String Completa de Conexão</label>
                     </div>
                 </form>
             </div>
@@ -71,6 +73,7 @@
                     <input type="hidden" id="idPesquisa">
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <input class="mdl-textfield__input" type="text" id="apelidoPesquisa" maxlength="30" placeholder="Descrição da SQL" required>
+                        <label class="mdl-textfield__label" for="apelidoPesquisa">Apelido da Pesquisa</label>
                     </div>
 
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fix-height" id="selectConexaoPesquisa">
@@ -82,7 +85,8 @@
                     </div>
 
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <textarea class="mdl-textfield__input" id="comandoPesquisa" rows="10" placeholder="Comando SQL" required></textarea>
+                        <textarea class="mdl-textfield__input" id="comandoPesquisa" rows="10" required></textarea>
+                        <label class="mdl-textfield__label" for="comandoPesquisa">Comando SQL</label>
                     </div>
                 </form>
             </div>

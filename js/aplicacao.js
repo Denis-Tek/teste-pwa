@@ -122,7 +122,7 @@ document.addEventListener('click', (event) => {
                 modalEditarPesquisa.showModal();
                 break
             case 'excluirConexao':
-                modalConfirmarExclusao_texto_extra.innerHTML = `Você está tentando excluir a conexão <strong> ${ApelidoDaConexao(button.dataset['item'])} </strong>.<br>`+
+                modalConfirmarExclusao_texto_extra.innerHTML = `Você está tentando excluir a conexão <strong> ${ApelidoDaConexao(button.dataset['item'])} </strong><br>`+
                                                                'Todas as pesquisas associadas a esta conexão serão também excluídas.';
                 modalConfirmarExclusao.Lista        = Conexoes;
                 modalConfirmarExclusao.IdExcluir    = button.dataset['item'];
