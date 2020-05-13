@@ -18,7 +18,8 @@ const FILES = [
 self.addEventListener('install', (event) => {
     event.waitUntil(
         caches.open(CACHE_NAME)
-            .then(cache => (cache.addAll(FILES)))
+            .then( cache => (cache.addAll(FILES)))
+            .catch( erro => (console.log("Erro carregar arquivo para cache: ", erro)))
     )
 });
 
