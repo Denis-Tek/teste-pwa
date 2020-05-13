@@ -99,9 +99,16 @@ document.addEventListener('click', (event) => {
     };
 
     // Tratamento de clicks em botões de ações
-    if (event.target.classList.contains('material-icons')) {
+    if ( (event.target.classList.contains('material-icons')) ||
+         (event.target.classList.contains('mdl-button')) ) {
 
-        var button = event.target.parentElement;
+        var button;
+
+        if (event.target.classList.contains('material-icons')) {
+            button = event.target.parentElement;
+        } else if (event.target.classList.contains('mdl-button')) {
+            button = event.target;
+        }
 
         switch (button.dataset['action']) {
             case 'adicionar':
