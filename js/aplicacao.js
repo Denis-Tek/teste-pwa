@@ -400,3 +400,16 @@ function MaxArray(Array, atributo) {
   });
   return max;
 }
+
+
+
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service_worker.js')
+            .then( (reg) => {
+                console.log('Meu service worker foi registrado', reg)
+            }).catch( (erro) => {
+                console.log('Erro ao registrar o meu service worker', erro)
+        })
+    })
+}
