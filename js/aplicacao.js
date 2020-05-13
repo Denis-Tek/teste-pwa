@@ -405,7 +405,7 @@ function MaxArray(Array, atributo) {
 
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        navigator.serviceWorker.register('../service_worker.js')
+        navigator.serviceWorker.register('./service_worker.js')
             .then( (reg) => {
                 console.log('Meu service worker foi registrado', reg)
             }).catch( (erro) => {
