@@ -3,13 +3,16 @@ const CACHE_NAME = 'DPR_Firebird_Query_v0.0.0';
 const FILES = [
     '/index.html',
 
-    '/css/*.css',
-    '/css/getmdl-select-master/*.css',
+    '/css/styles.css',
+    '/css/getmdl-select-master/getmdl-select-min.css',
 
     '/js/aplicacao.js',
-    '/js/getmdl-select-master/*.js',
+    '/js/getmdl-select-master/getmdl-select.min.js',
 
-    '/images/*.png'
+    '/images/icon.png',
+    '/images/icon-72.png',
+    '/images/icon-144.png',
+    '/images/icon-192.png'
 ];
 
 self.addEventListener('install', (event) => {
@@ -38,5 +41,6 @@ self.addEventListener('fetch', (event) => {
     event.respondWith(
         caches.match(event.request)
             .then(response => (response || fetch(event.request)))
+            .catch( erro => (console.log("Erro ao dar fetch: ", erro)))
     )
 });
