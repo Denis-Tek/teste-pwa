@@ -1,13 +1,15 @@
 const CACHE_NAME = 'DPR_Firebird_Query_v0.0.0';
 
 const FILES = [
-    '../index.html',
+    '/index.html',
 
-    '../css/*.css',
-    '../css/getmdl-select-master/*.css',
+    '/css/*.css',
+    '/css/getmdl-select-master/*.css',
 
-    '../js/aplicacao.js',
-    '../js/getmdl-select-master/*.js'
+    '/js/aplicacao.js',
+    '/js/getmdl-select-master/*.js',
+
+    '/images/*.png'
 ];
 
 self.addEventListener('install', (event) => {
