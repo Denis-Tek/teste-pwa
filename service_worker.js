@@ -1,25 +1,25 @@
 const CACHE_NAME = 'DPR_Firebird_Query_v0.0.0';
 
 const FILES = [
-    '/index.html',
+    './index.html',
 
-    '/css/styles.css',
-    '/css/getmdl-select-master/getmdl-select-min.css',
+    './css/styles.css',
+    './css/getmdl-select-master/getmdl-select-min.css',
 
-    '/js/aplicacao.js',
-    '/js/getmdl-select-master/getmdl-select.min.js',
+    './js/aplicacao.js',
+    './js/getmdl-select-master/getmdl-select.min.js',
 
-    '/images/icon.png',
-    '/images/icon-72.png',
-    '/images/icon-144.png',
-    '/images/icon-192.png'
+    './images/icon.png',
+    './images/icon-72.png',
+    './images/icon-144.png',
+    './images/icon-192.png'
 ];
 
 self.addEventListener('install', (event) => {
     event.waitUntil(
         caches.open(CACHE_NAME)
-            .then( cache => (cache.addAll(FILES)))
-            .catch( erro => (console.log("Erro carregar arquivo para cache: ", erro)))
+            .then( (cache) => (cache.addAll(FILES)))
+            .catch( (erro) => (console.log("Erro carregar arquivo para cache: ", erro)))
     )
 });
 
