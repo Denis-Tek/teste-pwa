@@ -1,26 +1,29 @@
 const CACHE_NAME = 'DPR_Firebird_Query_v0.0.0';
 
 const FILES = [
-    './index.html',
+    'index.html',
+    'favicon.ico',
 
-    './css/styles.css',
-    './css/getmdl-select-master/getmdl-select-min.css',
+    'css/styles.css',
+    'css/getmdl-select-master/getmdl-select.min.css',
 
-    './js/aplicacao.js',
-    './js/getmdl-select-master/getmdl-select.min.js',
+    'js/aplicacao.js',
+    'js/getmdl-select-master/getmdl-select.min.js',
 
-    './images/icon.png',
-    './images/icon-72.png',
-    './images/icon-144.png',
-    './images/icon-192.png'
+    'images/icon.png',
+    'images/icon-72.png',
+    'images/icon-144.png',
+    'images/icon-192.png'
 ];
 
-self.addEventListener('install', (event) => {
+self.addEventListener('install', function(event) {
     event.waitUntil(
         caches.open(CACHE_NAME)
-            .then( (cache) => (cache.addAll(FILES)))
-            .catch( (erro) => (console.log("Erro carregar arquivo para cache: ", erro)))
-    )
+            .then((cache) => {
+                cache.addAll(FILES)
+                    .catch(erro => console.log("Erro ao carregar arquivo para cache: ", erro))
+            })
+    );
 });
 
 self.addEventListener('activate', (event) => {
@@ -38,10 +41,12 @@ self.addEventListener('activate', (event) => {
     );
 });
 
-self.addEventListener('fetch', (event) => {
+self.addEventListener('fetch', function(event){
     event.respondWith(
         caches.match(event.request)
-            .then(response => (response || fetch(event.request)))
-            .catch( erro => (console.log("Erro ao dar fetch: ", erro)))
+            .then(function(response){
+                return response || fetch(event.request);
+            })
+            .catch(erro => console.log("Erro ao carregar arquivo do cache: ", erro))
     )
 });
