@@ -4,7 +4,7 @@
   "theme_color": "#3f51b5",
   "background_color": "#3f51b5",
   "display": "standalone",
-  "scope": "/",
+  "scope": "/teste-pwa/",
   "start_url": "/teste-pwa/",
   "icons": [
     {
