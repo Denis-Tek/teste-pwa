@@ -3,6 +3,8 @@ const CACHE_NAME = 'DPR_Firebird_Query_v0.0.0';
 const FILES = [
     'index.html',
     'favicon.ico',
+    'manifest.json',
+    'service_worker.js',
 
     'css/styles.css',
     'css/getmdl-select-master/getmdl-select.min.css',
