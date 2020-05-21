@@ -16,7 +16,8 @@ const FILES = [
     'images/icon-72.png',
     'images/icon-144.png',
     'images/icon-192.png',
-    'images/android-chrome-512x512.png'
+    'images/android-chrome-512x512.png',
+    'images/apple-touch-icon.png'
 ];
 
 self.addEventListener('install', function(event) {
