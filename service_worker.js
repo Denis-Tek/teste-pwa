@@ -5,6 +5,7 @@ const FILES = [
     'favicon.ico',
     'manifest.json',
     'service_worker.js',
+    'registrador_service_worker.js',
 
     'css/styles.css',
     'css/getmdl-select-master/getmdl-select.min.css',
