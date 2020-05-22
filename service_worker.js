@@ -25,7 +25,7 @@ self.addEventListener('install', function(event) {
         caches.open(CACHE_NAME)
             .then((cache) => {
                 cache.addAll(FILES)
-                    .catch(erro => console.log("Erro ao carregar arquivo para cache: ", erro))
+                     .catch(erro => console.log("Erro ao carregar arquivo para cache: ", erro))
             })
     );
 });
@@ -48,9 +48,7 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', function(event){
     event.respondWith(
         caches.match(event.request)
-            .then(function(response){
-                return response || fetch(event.request);
-            })
+            .then(response => (response || fetch(event.request)))
             .catch(erro => console.log("Erro ao carregar arquivo do cache: ", erro))
     )
 });
