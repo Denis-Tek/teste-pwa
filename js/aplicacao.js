@@ -30,6 +30,15 @@ let modalConfirmarExclusao_BotaoClose     = modalConfirmarExclusao.querySelector
 
 let modalAbout_Botaoclose                 = modalAbout.querySelector('.close');
 
+// Registrando service worker
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('../service_worker.js')
+            .then( (regis) => {console.log('Service worker registrado!', regis)} )
+            .catch( (erro) => {console.log('Erro ao registrar o meu service worker', erro) })
+    })
+};
+
 // Mock inicial dos dados para testes
 let Conexoes = {"Dados" :[
     {'id': 1,
@@ -400,6 +409,3 @@ function MaxArray(Array, atributo) {
   });
   return max;
 }
-
-
-
