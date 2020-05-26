@@ -96,7 +96,7 @@ document.addEventListener('click', (event) => {
                 break;
         }
         return;
-    };
+    }
 
     // Tratamento de clicks em botões de ações
     if ( (event.target.classList.contains('material-icons')) ||
@@ -112,10 +112,10 @@ document.addEventListener('click', (event) => {
 
         switch (button.dataset['action']) {
             case 'adicionar':
-                if (listaPrincipal.dataset['info'] == 'CONEXOES') {
+                if (listaPrincipal.dataset['info'] === 'CONEXOES') {
                     PreencherFormEdicaoConexao(-1);
                     modalEditarConexao.showModal();
-                } else if (listaPrincipal.dataset['info'] == 'PESQUISAS') {
+                } else if (listaPrincipal.dataset['info'] === 'PESQUISAS') {
                     PreencherFormEdicaoPesquisa(-1);
                     modalEditarPesquisa.showModal();
                 }
@@ -123,11 +123,11 @@ document.addEventListener('click', (event) => {
             case 'editarConexao':
                 PreencherFormEdicaoConexao(button.dataset['item']);
                 modalEditarConexao.showModal();
-                break
+                break;
             case 'editarPesquisa':
                 PreencherFormEdicaoPesquisa(button.dataset['item']);
                 modalEditarPesquisa.showModal();
-                break
+                break;
             case 'excluirConexao':
                 modalConfirmarExclusao_texto_extra.innerHTML = `Você está tentando excluir a conexão <strong> ${ApelidoDaConexao(button.dataset['item'])} </strong><br>`+
                                                                'Todas as pesquisas associadas a esta conexão serão também excluídas.';
@@ -149,11 +149,8 @@ document.addEventListener('click', (event) => {
                 Filtrar(button.dataset['item']);
                 ListarPesquisas();
                 break;
-
         }
-        return;
     }
-
 });
 
 
@@ -175,11 +172,11 @@ function Filtrar(idConexao){
 }
 
 function ApelidoDaConexao(idConexao) {
-  return Conexoes.Dados.find((conexao) => conexao.id == idConexao).apelido;
+  return Conexoes.Dados.find((conexao) => conexao.id === idConexao).apelido;
 }
 
 function ApelidoDaPesquisa(idPesquisa) {
-    return Pesquisas.Dados.find((pesquisa) => pesquisa.id == idPesquisa).apelido;
+    return Pesquisas.Dados.find((pesquisa) => pesquisa.id === idPesquisa).apelido;
 }
 
 
@@ -212,18 +209,18 @@ function ListarConexoes () {
                     </div>
                 </div>
             </li>`;
-    })
+    });
 
     listaPrincipal.dataset['info'] = 'CONEXOES';
     listaPrincipal.innerHTML = htmlConexoes;
     botaoAdd.style.display = 'inherit';
-};
+}
 
 function ListarPesquisas () {
     var htmlPesquisas = '';
     let conexaoFiltrada = filtroPrincipal.dataset['filtro'];
     Pesquisas.Dados.sort((a, b) => a.apelido.toUpperCase() > b.apelido.toUpperCase() ? 1 : -1);
-    Pesquisas.Dados.filter((elemento) => elemento.conexao == conexaoFiltrada || ! conexaoFiltrada).forEach(Pesquisa => {
+    Pesquisas.Dados.filter((elemento) => elemento.conexao === conexaoFiltrada || ! conexaoFiltrada).forEach(Pesquisa => {
         htmlPesquisas +=
             `<li class="lista-principal-pesquisa">
                 <div class="demo-card-wide mdl-card mdl-shadow--2dp">
@@ -252,7 +249,7 @@ function ListarPesquisas () {
                     </div>
                 </div>
             </li>`;
-    })
+    });
 
     listaPrincipal.dataset['info'] = 'PESQUISAS';
     listaPrincipal.innerHTML = htmlPesquisas;
@@ -266,7 +263,7 @@ function PreencherFormEdicaoConexao(id) {
         editApelidoConexao.value = '';
         editCaminhoConexao.value = '';
     } else {
-        let index = Conexoes.Dados.findIndex(conexao => conexao.id == id);
+        let index = Conexoes.Dados.findIndex(conexao => conexao.id === id);
         editApelidoConexao.value = Conexoes.Dados[index].apelido;
         editCaminhoConexao.value = Conexoes.Dados[index].caminho;
     }
@@ -280,7 +277,7 @@ function PreencherFormEdicaoPesquisa(id) {
         editApelidoPesquisa.value    = '';
         editComandoPesquisa.value    = '';
     } else {
-        let index = Pesquisas.Dados.findIndex(pesquisa => pesquisa.id == id);
+        let index = Pesquisas.Dados.findIndex(pesquisa => pesquisa.id === id);
 
         CarregarListaConexoes(Pesquisas.Dados[index].conexao);
 
@@ -292,23 +289,23 @@ function PreencherFormEdicaoPesquisa(id) {
 function CarregarListaConexoes(idConexaoAtual) {
     let lista = '';
     Conexoes.Dados.forEach((conexao) => {
-        lista += `<li class="mdl-menu__item" data-val=${conexao.id} ${conexao.id == idConexaoAtual ? 'data-selected="true"' : ''}> ${conexao.apelido} </li>`
+        lista += `<li class="mdl-menu__item" data-val=${conexao.id} ${conexao.id === idConexaoAtual ? 'data-selected="true"' : ''}> ${conexao.apelido} </li>`
     });
     listaConexoesDisponiveis.innerHTML = lista;
-    if (idConexaoAtual == '') {
+    if (idConexaoAtual === '') {
         modalEditarPesquisa.querySelector('#conexaoPesquisa').value = '';
     }
     getmdlSelect.init('#selectConexaoPesquisa');
 }
 
 function ExcluirPesquisas(idConexao){
-    Pesquisas.Dados = Pesquisas.Dados.filter((pesquisa) => pesquisa.conexao != idConexao);
+    Pesquisas.Dados = Pesquisas.Dados.filter((pesquisa) => pesquisa.conexao !== idConexao);
 }
 
 
 modalEditarConexao_BotaoSalvar.addEventListener('click', (event) =>  {
-    if (editApelidoConexao.value.trim() == '' ||
-        editCaminhoConexao.value.trim() == '') return;
+    if (editApelidoConexao.value.trim() === '' ||
+        editCaminhoConexao.value.trim() === '') return;
 
     id = editIdConexao.value;
 
@@ -319,7 +316,7 @@ modalEditarConexao_BotaoSalvar.addEventListener('click', (event) =>  {
         Conexoes.Dados.push({"id": max + 1});
         index = Conexoes.Dados.length - 1;
     } else {
-        index = Conexoes.Dados.findIndex(conexao => conexao.id == id);
+        index = Conexoes.Dados.findIndex(conexao => conexao.id === id);
     }
 
     Conexoes.Dados[index].apelido = editApelidoConexao.value.trim();
@@ -335,9 +332,9 @@ modalEditarConexao_BotaoClose.addEventListener('click', (event) =>  {
 
 
 modalEditarPesquisa_BotaoSalvar.addEventListener('click', (event) =>  {
-    if (editConexaoSelecionada.value.trim() == '' ||
-        editApelidoPesquisa.value.trim() == '' ||
-        editComandoPesquisa.value.trim() == '') return;
+    if (editConexaoSelecionada.value.trim() === '' ||
+        editApelidoPesquisa.value.trim() === '' ||
+        editComandoPesquisa.value.trim() === '') return;
 
     id = editIdPesquisa.value;
 
@@ -348,7 +345,7 @@ modalEditarPesquisa_BotaoSalvar.addEventListener('click', (event) =>  {
         Pesquisas.Dados.push({"id": max + 1});
         index = Pesquisas.Dados.length - 1;
     } else {
-        index = Pesquisas.Dados.findIndex(pesquisa => pesquisa.id == id);
+        index = Pesquisas.Dados.findIndex(pesquisa => pesquisa.id === id);
     }
     Pesquisas.Dados[index].conexao = editConexaoSelecionada.value.trim();
     Pesquisas.Dados[index].apelido = editApelidoPesquisa.value.trim();
@@ -372,7 +369,7 @@ modalConfirmarExclusao_BotaoConfirmar.addEventListener('click', (event) =>  {
         modalConfirmarExclusao.AntesExcluir(modalConfirmarExclusao.IdExcluir);
     }
 
-    modalConfirmarExclusao.Lista.Dados = modalConfirmarExclusao.Lista.Dados.filter(Item => Item.id != modalConfirmarExclusao.IdExcluir);
+    modalConfirmarExclusao.Lista.Dados = modalConfirmarExclusao.Lista.Dados.filter(Item => Item.id !== modalConfirmarExclusao.IdExcluir);
 
     if (typeof modalConfirmarExclusao.AposExcluir === 'function') {
         modalConfirmarExclusao.AposExcluir();
