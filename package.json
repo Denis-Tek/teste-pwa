@@ -20,7 +20,7 @@
   
   "dependencies": {
     "ejs": "^3.1.7",
-    "express": "^4.17.3",
+    "express": "^4.21.2",
     "node-firebird": "^0.8.9",
     "web-push": "^3.4.3"
   },
